@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+import models
+from models import storage
+from models.review import Review
 
 
 class FileStorage:
@@ -8,15 +11,9 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-    def all(self, cls=None):
+    def all(self):
         """Returns a dictionary of models currently in storage"""
-        if cls is None:
-            return FileStorage.__objects
-        filtered = {}
-        for key in FileStorage.__objects:
-            if FileStorage.__objects[key].__class__.__name__ == cls.__name__:
-                filtered[key] = FileStorage.__objects[key]
-        return filtered
+        return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -51,13 +48,12 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
+                        self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
-    def delete(self, obj=None):
-        """Delete an object if it exists"""
-        if obj is None:
-            return
-        obj_key = obj.__class__.__name__ + "." + obj.__getattribute__("id")
-        FileStorage.__objects.pop(obj_key)
+    def reviews(self):
+        '''place'''
+        review_instances = models.storage.all(models.Review)
+        place_reviews = [review for review in review_instances.values() if review.place_id == self.id]
+        return place_reviews
