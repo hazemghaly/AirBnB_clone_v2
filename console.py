@@ -145,8 +145,8 @@ class HBNBCommand(cmd.Cmd):
                 elif value.replace("-", "").isnumeric():
                     value = int(value)
                 else:
-                    value = value.replace("_", " ")
-                    value = value.replace('"', "")
+                    value.replace("_", " ")
+                    value.replace('"', '\\"')
                 setattr(new_instance, name, value)
         storage.save()
         print(new_instance.id)
