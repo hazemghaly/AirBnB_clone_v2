@@ -56,6 +56,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """Delete obj from __objects if it exists"""
+        """Delete an object if it exists"""
         obj_key = obj.__class__.__name__ + "." + obj.__getattribute__("id")
         FileStorage.__objects.pop(obj_key)
+        return
