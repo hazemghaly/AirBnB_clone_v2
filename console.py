@@ -146,7 +146,7 @@ class HBNBCommand(cmd.Cmd):
                     value = int(value)
                 else:
                     value.replace("_", " ")
-                    value.replace('"', '\\"')
+                    value.replace('"', "")
                 setattr(new_instance, name, value)
         storage.save()
         print(new_instance.id)
