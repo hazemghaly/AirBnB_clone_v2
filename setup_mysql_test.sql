@@ -1,9 +1,7 @@
 -- script that prepares a MySQL server test
 -- because SQL the best!
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
-SET GLOBAL validate_password.length = 4;
-SET GLOBAL validate_password.policy=LOW;
-CREATE USER 'hbnb_test'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'hbnb_test_pwd';
+CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY 'hbnb_test_pwd';
 ALTER USER 'hbnb_test'@'localhost' IDENTIFIED BY 'hbnb_test_pwd';
 GRANT USAGE ON *.* TO 'hbnb_test'@'localhost';
 GRANT SELECT ON `performance_schema`.* TO 'hbnb_test'@'localhost';
