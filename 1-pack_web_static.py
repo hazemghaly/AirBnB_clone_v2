@@ -9,6 +9,9 @@ import datetime
 
 @runs_once
 def do_pack():
+    '''
+do_pack Funct generates  tgz archive
+'''
     if not os.path.exists("versions"):
         os.mkdir("versions")
     now = datetime.datetime.now()
