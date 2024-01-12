@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 '''
-Fabric script generates  tgz archive 
+Fabric script generates  tgz archive
 '''
 from fabric.api import local, runs_once
 import os
 import datetime
+
 
 @runs_once
 def do_pack():
