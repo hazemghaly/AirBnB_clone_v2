@@ -8,7 +8,8 @@ import datetime
 
 @runs_once
 def do_pack():
-    os.mkdir("versions")
+    if not os.path.exists("versions"):
+        os.mkdir("versions")
     now = datetime.datetime.now()
     t = now.strftime("%Y%m%d%H%M%S")
     file = f"versions/web_static_{t}.tgz"
