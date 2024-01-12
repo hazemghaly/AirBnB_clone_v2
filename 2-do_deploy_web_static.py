@@ -15,14 +15,15 @@ def do_deploy(archive_path):
     f = archive_path.split("/")[-1]
     no_ext = f.split(".")[0]
     path = "/data/web_static/releases/"
-    if not (put(archive_path, "/tmp/{}".format(f)) ,
-        run("mkdir -p {}{}/".format(path, no_ext)) ,
-        run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext)) ,
-        run("rm /tmp/{}".format(f)) ,
+    if all(
+        put(archive_path, "/tmp/{}".format(f)).failed,
+        run("mkdir -p {}{}/".format(path, no_ext)).failed,
+        run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext)).failed,
+        run("rm /tmp/{}".format(f)).failed,
         run("mv /data/web_static/releases/{}/web_static/* "
-            "/data/web_static/releases/{}/".format(no_ext, no_ext)) ,
-        run("rm -rf {}{}/web_static".format(path, no_ext)) ,
-        run("rm -rf /data/web_static/current") ,
-        run("ln -s {}{}/ /data/web_static/current"
-            .format(path, no_ext))):
+            "/data/web_static/releases/{}/".format(no_ext, no_ext)).failed,
+        run("rm -rf {}{}/web_static".format(path, no_ext)).failed,
+        run("rm -rf /data/web_static/current").failed,
+        run("ln -s {}{}/ /data/web_static/current".format(path, no_ext)).failed
+    ):
         return False
