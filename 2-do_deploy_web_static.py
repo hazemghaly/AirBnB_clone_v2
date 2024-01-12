@@ -12,9 +12,9 @@ def do_deploy(archive_path):
     ''' an archive to the web servers'''
     if not os.path.isfile(archive_path):
         return False
-        f = archive_path.split("/")[-1]
-        no_ext = f.split(".")[0]
-        path = "/data/web_static/releases/"
+    f = archive_path.split("/")[-1]
+    no_ext = f.split(".")[0]
+    path = "/data/web_static/releases/"
     if (put(archive_path, "/tmp/{}".format(f)) and
         run("mkdir -p {}{}/".format(path, no_ext)) and
         run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext)) and
