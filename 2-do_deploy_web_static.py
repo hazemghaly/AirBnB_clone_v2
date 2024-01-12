@@ -15,7 +15,7 @@ def do_deploy(archive_path):
     f = archive_path.split("/")[-1]
     no_ext = f.split(".")[0]
     path = "/data/web_static/releases/"
-    if all(
+    if all([
         put(archive_path, "/tmp/{}".format(f)).failed,
         run("mkdir -p {}{}/".format(path, no_ext)).failed,
         run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext)).failed,
@@ -25,5 +25,5 @@ def do_deploy(archive_path):
         run("rm -rf {}{}/web_static".format(path, no_ext)).failed,
         run("rm -rf /data/web_static/current").failed,
         run("ln -s {}{}/ /data/web_static/current".format(path, no_ext)).failed
-    ):
+    ]):
         return False
