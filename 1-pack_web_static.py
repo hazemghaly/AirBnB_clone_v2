@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Fabric script generates  tgz archive 
+"""
 from fabric.api import local, runs_once
 import os
 import datetime
