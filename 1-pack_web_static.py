@@ -20,4 +20,4 @@ def do_pack():
         print("web_static packed: {} -> {} Bytes".format(out, size))
     except Exception:
         out = None
-    return outt
+    return out
