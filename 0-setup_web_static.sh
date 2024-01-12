@@ -11,9 +11,9 @@ sudo echo "<html>
     Holberton School
   </body>
 </html>" | sudo tee /data/web_static/releases/test/index.html
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -hR ubuntu:ubuntu /data/
 sudo chgrp -R ubuntu /data/
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo echo "server {
     listen 80 default_server;
     listen [::]:80 default_server;
