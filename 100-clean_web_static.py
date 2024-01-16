@@ -3,7 +3,9 @@
 Fabric script
 '''
 
-import fabric.api, os
+import fabric.api
+import os
+
 
 env.hosts = ["100.27.12.93", "54.146.89.146"]
 env.user = "ubuntu"
