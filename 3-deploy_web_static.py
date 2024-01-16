@@ -37,15 +37,15 @@ def do_deploy(archive_path):
         no_ext = f.split(".")[0]
         path = "/data/web_static/releases/"
         put(archive_path, "/tmp/{}".format(f))
-        run("mkdir -p {}{}/".format(path, no_ext))
-        run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext))
-        run("rm /tmp/{}".format(f))
-        run("mv {0}{1}/web_static/ {0}{1}/".format(path, no_ext))
-        run("rm -rf {}{}/web_static".format(path, no_ext))
-        run("rm -rf /data/web_static/current")
-        run("ln -sf {}{}/ /data/web_static/current".format(
+        run("sudo mkdir -p {}{}/".format(path, no_ext))
+        run("sudo tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext))
+        run("sudo rm /tmp/{}".format(f))
+        run("sudo mv /data/web_static/releases/{}/web_static/* "
+            "/data/web_static/releases/{}/".format(no_ext, no_ext))
+        run("sudo rm -rf {}{}/web_static".format(path, no_ext))
+        run("sudo rm -rf /data/web_static/current")
+        run("sudo ln -sf {}{}/ /data/web_static/current".format(
             path, no_ext))
-        run("sudo chown -hR ubuntu:ubuntu /data/")
         print("deployed!.")
         return True
     except BaseException:
