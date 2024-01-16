@@ -25,7 +25,7 @@ def do_deploy(archive_path):
         run("rm -rf {}{}/web_static".format(path, no_ext)).failed,
         run("rm -rf /data/web_static/current").failed,
         run("ln -sf {}{}/ /data/web_static/current".format(path, no_ext)).failed,
-        run("chown -hR ubuntu:ubuntu /data/").failed
+        run("sudo chown -hR ubuntu:ubuntu /data/").failed
     ]):
         return False
     print("deployed!.")
