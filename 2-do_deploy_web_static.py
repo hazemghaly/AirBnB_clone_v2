@@ -20,7 +20,7 @@ def do_deploy(archive_path):
         run("mkdir -p {}{}/".format(path, no_ext)).failed,
         run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext)).failed,
         run("rm /tmp/{}".format(f)).failed,
-        run("rsync -a /data/web_static/releases/{}/web_static/* "
+        run("mv -a /data/web_static/releases/{}/web_static/* "
             "/data/web_static/releases/{}/".format(no_ext, no_ext)).failed,
         run("rm -rf {}{}/web_static".format(path, no_ext)).failed,
         run("rm -rf /data/web_static/current").failed,
