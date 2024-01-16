@@ -12,7 +12,9 @@ env.user = "ubuntu"
 
 
 def do_clean(number=0):
-    ''' cleaning '''
+    ''' 
+    cleaning
+'''
     number = int(number)
     if number == 0:
         number = 2
