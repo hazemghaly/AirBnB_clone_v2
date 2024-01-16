@@ -3,7 +3,7 @@
 Fabric script
 '''
 
-import fabric.api
+import fabric.api, os
 
 env.hosts = ["100.27.12.93", "54.146.89.146"]
 env.user = "ubuntu"
@@ -16,6 +16,13 @@ def do_clean(number=0):
         number = 2
     else:
         number += 1
-    local(f'cd versions && ls -t | tail -n +{number} | xargs rm -rf')
-    path = '/data/web_static/releases'
-    run(f'cd {path} && ls -t | tail -n +{number} | xargs rm -rf')
+    archives = sorted(os.listdir("versions"))
+    [archives.pop() for i in range(number)]
+    with lcd("versions"):
+        [local("rm ./{}".format(a)) for a in archives]
+
+    with cd("/data/web_static/releases"):
+        archives = run("ls -tr").split()
+        archives = [a for a in archives if "web_static_" in a]
+        [archives.pop() for i in range(number)]
+        [run("rm -rf ./{}".format(a)) for a in archives]
