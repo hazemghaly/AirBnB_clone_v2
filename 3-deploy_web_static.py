@@ -57,7 +57,7 @@ def do_deploy(archive_path):
 def deploy():
     """Create and distribute an archive"""
     new_file = do_pack()
-    if exists(new_file) is False:
+    if new_file is None:
         return False
     result = do_deploy(new_file)
     return result
