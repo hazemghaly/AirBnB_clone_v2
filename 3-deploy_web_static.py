@@ -7,7 +7,7 @@ from fabric.api import put, run, env, local, runs_once
 import os
 import datetime
 env.hosts = ["100.27.12.93", "54.146.89.146"]
-env.user = "ubuntu"
+
 
 def do_pack():
     '''
@@ -32,32 +32,29 @@ def do_deploy(archive_path):
     ''' an archive to the web servers'''
     if not os.path.isfile(archive_path):
         return False
-    f = archive_path.split("/")[-1]
-    no_ext = f.split(".")[0]
-    path = "/data/web_static/releases/"
-    if all([
-        put(archive_path, "/tmp/{}".format(f)).failed,
-        run("mkdir -p {}{}/".format(path, no_ext)).failed,
-        run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext)).failed,
-        run("rm /tmp/{}".format(f)).failed,
-        run("mv /data/web_static/releases/{}/web_static/* "
-           "/data/web_static/releases/{}/".format(
-            no_ext, no_ext)).failed,
-        run("rm -rf {}{}/web_static".format(path, no_ext)).failed,
-        run("rm -rf /data/web_static/current").failed,
+    try:
+        f = archive_path.split("/")[-1]
+        no_ext = f.split(".")[0]
+        path = "/data/web_static/releases/"
+        put(archive_path, "/tmp/{}".format(f))
+        run("mkdir -p {}{}/".format(path, no_ext))
+        run("tar -xzf /tmp/{} -C {}{}/".format(f, path, no_ext))
+        run("rm /tmp/{}".format(f))
+        run("mv {0}{1}/web_static/ {0}{1}/".format(path, no_ext))
+        run("rm -rf {}{}/web_static".format(path, no_ext))
+        run("rm -rf /data/web_static/current")
         run("ln -sf {}{}/ /data/web_static/current".format(
-            path, no_ext)).failed,
-        run("sudo chown -hR ubuntu:ubuntu /data/").failed
-    ]):
+            path, no_ext))
+        run("sudo chown -hR ubuntu:ubuntu /data/")
+        print("deployed!.")
+        return True
+    except BaseException:
         return False
-    print("deployed!.")
-    return True
 
 
 def deploy():
     """Create and distribute an archive"""
-    new_file = do_pack()
-    if new_file is None:
+    archive_path = do_pack()
+    if archive_path is None:
         return False
-    result = do_deploy(new_file)
-    return result
+    return do_deploy(archive_path)
