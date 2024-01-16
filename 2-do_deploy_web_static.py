@@ -27,4 +27,5 @@ def do_deploy(archive_path):
         run("ln -s {}{}/ /data/web_static/current".format(path, no_ext)).failed
     ]):
         return False
+    print("deployed!.")
     return True
