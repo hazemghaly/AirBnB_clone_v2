@@ -8,6 +8,7 @@ import os
 env.hosts = ["100.27.12.93", "54.146.89.146"]
 env.user = "ubuntu"
 
+
 def do_deploy(archive_path):
     ''' an archive to the web servers'''
     if not os.path.isfile(archive_path):
